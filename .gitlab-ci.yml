@@ -1,0 +1,44 @@
+stages:
+  - ingest
+  - transform
+  - load_db
+
+ingest:
+  stage: ingest
+  script:
+    - pip install -r requirements.txt
+    - python src/ingest.py
+  artifacts:
+    paths:
+      - data/raw/
+    expire_in: 1 week
+
+transform:
+  stage: transform
+  needs: [ingest]
+  script:
+    - pip install -r requirements.txt
+    - python src/transform.py
+  artifacts:
+    paths:
+      - data/processed/
+    expire_in: 1 week
+
+load_db:
+  stage: load_db
+  needs: ["transform"]
+  variables:
+    PG_HOST: "db"
+    PG_PORT: "5432"
+    PG_DB: "rg_db"
+    PG_USER: "rg_user"
+    PG_PASSWORD: "rg_pass"
+  services:
+    - name: postgres:15
+      alias: db
+      command: ["postgres", "-c", "listen_addresses=*"]
+  before_script:
+    - pip install -r requirements.txt
+  script:
+    - python src/db.py
+    - python src/load_db.py
