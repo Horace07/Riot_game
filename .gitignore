@@ -2,3 +2,4 @@ data/raw/*
 !data/raw/.gitkeep
 .env
 __pycache__/
+

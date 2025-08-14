@@ -1,6 +1,7 @@
 stages:
   - ingest
 
+
 ingest:
   stage: ingest
   script:
@@ -9,4 +10,3 @@ ingest:
   artifacts:
     paths:
       - data/raw/
-    expire_in: 1 week
