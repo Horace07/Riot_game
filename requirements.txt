@@ -2,5 +2,4 @@ requests
 pandas
 pyarrow
 python-dotenv
-sqlalchemy>=2.0
-psycopg2-binary
+
