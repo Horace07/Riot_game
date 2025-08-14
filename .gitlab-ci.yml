@@ -1,0 +1,12 @@
+stages:
+  - ingest
+
+ingest:
+  stage: ingest
+  script:
+    - pip install -r requirements.txt
+    - python src/ingest.py
+  artifacts:
+    paths:
+      - data/raw/
+    expire_in: 1 week
